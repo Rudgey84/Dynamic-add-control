@@ -7,6 +7,8 @@ import {
   Validators,
   FormArray,
 } from '@angular/forms';
+
+// MOCK DATA
 export const LINKS = [
   {
     linkName: 'Managers',
