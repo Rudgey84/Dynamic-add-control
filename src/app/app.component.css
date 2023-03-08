@@ -1,0 +1,57 @@
+.link-line {
+  width: 100%;
+  position: relative;
+  margin: 15px;
+  border-top: 2px solid #000;
+}
+.entity-icon {
+  position: relative;
+  top: 4px;
+}
+.arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.link-line.arrow-right:after {
+  position: absolute;
+  content: '';
+  bottom: -8px;
+  right: 0;
+  display: inline-block;
+  border-right: 3px solid black;
+  border-bottom: 3px solid black;
+  width: 12px;
+  height: 12px;
+  transform: rotate(-45deg);
+}
+
+.link-line.arrow-left:before {
+  position: absolute;
+  content: '';
+  bottom: -8px;
+  left: 0;
+  display: inline-block;
+  border-right: 3px solid black;
+  border-bottom: 3px solid black;
+  width: 12px;
+  height: 12px;
+  transform: rotate(135deg);
+}
+
+input:-moz-read-only {
+  /* For Firefox */
+  background-color: #ccc;
+	cursor: default
+}
+
+input:read-only {
+  background-color: #e4e4e4;
+	cursor: default;
+	border: 1px solid #ced4da
+}
+
+input:read-only:focus-visible {
+	outline: -webkit-focus-ring-color auto 0px;
+}
+

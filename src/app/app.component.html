@@ -1,0 +1,195 @@
+<form
+  class="row m-5"
+  [formGroup]="linkTypeForm"
+  *ngIf="linkTypes && !edit; else temp"
+>
+  <div class="col-sm-12">
+    <div class="d-flex mb-3">
+      <div class="entity-icon">
+        <span><i class="fas fa-arrow-left"></i></span>
+        <span class="arrow">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="leftArrow"
+            formControlName="leftArrow"
+          />
+          <label class="d-none form-check-label" for="leftArrow"></label>
+        </span>
+      </div>
+      <div class="entity-icon ml-3">
+        <img
+          [src]="'assets/images/visualiser/' + nodeObjects[0].icon + '.gif'"
+        />
+      </div>
+      <div
+        class="link-line"
+        [class.arrow-left]="linkTypeForm.get('leftArrow').value"
+        [class.arrow-right]="linkTypeForm.get('rightArrow').value"
+      >
+        <div *ngIf="linkTypeForm.get('fields')['controls'][0].controls.Role" class="text-center">
+          <!-- {{
+            linkTypeForm.get('fields')['controls'][0].controls.Role !==
+            undefined
+              ? linkTypeForm.get('fields')['controls'][0].controls.Role
+                  .value === null
+                ? linkTypeForm.get('EID_linkName').value
+                : linkTypeForm.get('fields')['controls'][0].controls.Role.value
+              : linkTypeForm.get('EID_linkName').value
+          }} -->
+          {{linkTypeForm.get('fields')['controls'][0].controls.Role.value}}
+        </div>
+      </div>
+
+      <div class="entity-icon mr-3">
+        <img
+          [src]="'assets/images/visualiser/' + nodeObjects[1].icon + '.gif'"
+        />
+      </div>
+      <div class="entity-icon">
+        <span><i class="fas fa-arrow-right"></i></span>
+        <span class="arrow">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="rightArrow"
+            formControlName="rightArrow"
+          />
+          <label class="form-check-label" for="rightArrow"></label>
+        </span>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between mb-3">
+      <p class="text-left">
+        <span
+          *ngFor="let label of nodeObjects[0].label; let i = index"
+          style="font-size: 12px"
+          class="d-block"
+          [ngClass]="{ 'font-weight-bold': i === 0 }"
+          >{{ label }}</span
+        >
+      </p>
+      <p class="text-right">
+        <span
+          *ngFor="let label of nodeObjects[1].label; let i = index"
+          style="font-size: 12px"
+          class="d-block"
+          [ngClass]="{ 'font-weight-bold': i === 0 }"
+          >{{ label }}</span
+        >
+      </p>
+    </div>
+
+    <div *ngIf="linkTypes">
+      <div class="form-group">
+        <label class="h5" for="linkType">Link Type</label>
+        <select
+          formControlName="EID_linkName"
+          class="form-control"
+          (change)="
+            handleLinkTypeSelection(
+              $event.target.selectedOptions[0].parentNode.label
+            )
+          "
+        >
+          <ng-container *ngFor="let linkType of linkTypes">
+            <optgroup label="{{ linkType.linkName }}">
+              <ng-container *ngFor="let linkTypeChild of linkType.children">
+                <option
+                  [value]="linkTypeChild.name"
+                  [ngClass]="{
+                    'test-class': !linkType.createable && linkTypeChild.children
+                  }"
+                >
+                  {{ linkTypeChild.displayName }}
+                </option>
+              </ng-container>
+            </optgroup>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+
+
+
+    <div *ngIf="fields" formArrayName="fields">
+
+
+      <ng-container
+        *ngFor="let item of fields; let i = index"
+        [formGroup]="linkTypeAttributeForm"
+      >
+
+
+ 
+        <div [ngSwitch]="item.dataType">
+          <!--TEXT FIELDS-->
+          <div *ngSwitchCase="'STRING'">
+          <input *ngIf="i == 0" (change)="onEditRole($event)" [checked]="checked" class="form-check-input" type="checkbox">
+            <label>{{ item.displayName }}</label>
+            <input type="text" [readonly]="item.name === 'role' && !checked" [formControlName]="item.displayName" />
+          </div>
+          <!--NUMBER FIELDS-->
+          <div *ngSwitchCase="'NUMBER'">
+            <label>{{ item.displayName }}</label>
+            <input type="number" [formControlName]="item.displayName" />
+          </div>
+          <!-- DATE FIELDS-->
+          <div *ngSwitchCase="'DATE'">
+            <label>{{ item.displayName }}</label>
+            <input type="date" [formControlName]="item.displayName" />
+          </div>
+          <!--BOOLEAN-->
+          <div *ngSwitchCase="'BOOLEAN'">
+            <div class="form-check form-check-inline">
+              <label class="col-12 customradio"
+                ><span>Yes</span>
+                <input
+                  [ngClass]="{ checked: item.displayName === 'true' }"
+                  [formControlName]="item.displayName"
+                  [value]="'true'"
+                  type="radio"
+                />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="col-12 customradio"
+                ><span>No</span>
+                <input
+                  [ngClass]="{ checked: item.name === 'false' }"
+                  [formControlName]="item.displayName"
+                  [value]="'false'"
+                  type="radio"
+                />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+          <!--SELECTS-->
+          <div *ngSwitchCase="'ENUM'">
+            <select
+              class="form-control mb-3"
+              [formControlName]="item.displayName"
+            >
+              <option value=""></option>
+              <option
+                *ngFor="let selectValue of item.values"
+                [value]="selectValue"
+              >
+                {{ selectValue }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <button type="button" class="btn btn-success" (click)="handleSaveLink()">
+      Add Link
+    </button>
+  </div>
+</form>
+
+<ng-template #temp> Waiting for edit API </ng-template>
+<pre>Add Link Modal Form:<br /><code>{{ linkTypeForm.value | json }}</code></pre>
