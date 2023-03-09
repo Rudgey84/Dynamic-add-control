@@ -27,17 +27,11 @@
         [class.arrow-left]="linkTypeForm.get('leftArrow').value"
         [class.arrow-right]="linkTypeForm.get('rightArrow').value"
       >
-        <div *ngIf="linkTypeForm.get('fields')['controls'][0].controls.Role" class="text-center">
-          <!-- {{
-            linkTypeForm.get('fields')['controls'][0].controls.Role !==
-            undefined
-              ? linkTypeForm.get('fields')['controls'][0].controls.Role
-                  .value === null
-                ? linkTypeForm.get('EID_linkName').value
-                : linkTypeForm.get('fields')['controls'][0].controls.Role.value
-              : linkTypeForm.get('EID_linkName').value
-          }} -->
-          {{linkTypeForm.get('fields')['controls'][0].controls.Role.value}}
+        <div
+          *ngIf="linkTypeForm.get('fields')['controls'][0].controls.Role"
+          class="text-center"
+        >
+          {{ linkTypeForm.get('fields')['controls'][0].controls.Role.value }}
         </div>
       </div>
 
@@ -84,7 +78,7 @@
       <div class="form-group">
         <label class="h5" for="linkType">Link Type</label>
         <select
-          formControlName="EID_linkName"
+          formControlName="linkName"
           class="form-control"
           (change)="
             handleLinkTypeSelection(
@@ -110,24 +104,27 @@
       </div>
     </div>
 
-
-
     <div *ngIf="fields" formArrayName="fields">
-
-
       <ng-container
         *ngFor="let item of fields; let i = index"
         [formGroup]="linkTypeAttributeForm"
       >
-
-
- 
         <div [ngSwitch]="item.dataType">
           <!--TEXT FIELDS-->
           <div *ngSwitchCase="'STRING'">
-          <input *ngIf="i == 0" (change)="onEditRole($event)" [checked]="checked" class="form-check-input" type="checkbox">
+            <input
+              *ngIf="i == 0"
+              (change)="onEditRole($event)"
+              [checked]="checked"
+              class="form-check-input"
+              type="checkbox"
+            />
             <label>{{ item.displayName }}</label>
-            <input type="text" [readonly]="item.name === 'role' && !checked" [formControlName]="item.displayName" />
+            <input
+              type="text"
+              [readonly]="item.name === 'role' && !checked"
+              [formControlName]="item.displayName"
+            />
           </div>
           <!--NUMBER FIELDS-->
           <div *ngSwitchCase="'NUMBER'">

@@ -146,11 +146,11 @@ export class AppComponent implements OnInit {
   public fields;
   public checked: boolean;
   get get_linkTypeValue() {
-    return this.linkTypeForm.get('EID_linkName');
+    return this.linkTypeForm.get('linkName');
   }
 
   public handleSaveLink(): void {
-    this.linkTypeForm.get('EID_linkName').patchValue(this.linkType);
+    this.linkTypeForm.get('linkName').patchValue(this.linkType);
     console.log('saved', this.linkTypeForm.value);
   }
 
@@ -165,7 +165,7 @@ export class AppComponent implements OnInit {
     return this.formBuilder.group({
       leftArrow: new FormControl(),
       rightArrow: new FormControl(),
-      EID_linkName: new FormControl('Friends', [Validators.required]),
+      linkName: new FormControl('Friends', [Validators.required]),
       fields: this.formBuilder.array([this.createLinkAttributesFormGroup()]),
     });
   }
@@ -205,16 +205,15 @@ export class AppComponent implements OnInit {
       this.linkTypeAttributeForm.addControl(x.displayName, new FormControl());
     }
 
-    const EID_linkName = this.linkTypeForm.get('EID_linkName').value;
+    const linkName = this.linkTypeForm.get('linkName').value;
     this.linkTypeForm
       .get('fields')
-      ['controls'][0].controls.Role.patchValue(EID_linkName);
-    //this.linkTypeForm.get('EID_linkName').patchValue(linkType);
+      ['controls'][0].controls.Role.patchValue(linkName);
   }
 
   onEditRole(evt) {
     this.checked = evt.target.checked;
-   
+
     // Adds the original role to storage before amendment
     if (!localStorage['roleValue']) {
       localStorage.setItem(
