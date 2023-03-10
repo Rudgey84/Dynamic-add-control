@@ -80,11 +80,7 @@
         <select
           formControlName="linkName"
           class="form-control"
-          (change)="
-            handleLinkTypeSelection(
-              $event.target.selectedOptions[0].parentNode.label
-            )
-          "
+          (change)="handleLinkTypeSelection($event)"
         >
           <ng-container *ngFor="let linkType of linkTypes">
             <optgroup label="{{ linkType.linkName }}">
@@ -98,6 +94,9 @@
                   {{ linkTypeChild.displayName }}
                 </option>
               </ng-container>
+              <option *ngIf="linkType.linkName !== 'Other....' " [id]="linkType.linkName" [value]="linkType.linkName">
+                Other
+              </option>
             </optgroup>
           </ng-container>
         </select>
@@ -112,19 +111,15 @@
         <div [ngSwitch]="item.dataType">
           <!--TEXT FIELDS-->
           <div *ngSwitchCase="'STRING'">
-            <input
-              *ngIf="i == 0"
-              (change)="onEditRole($event)"
-              [checked]="checked"
-              class="form-check-input"
-              type="checkbox"
-            />
-            <label>{{ item.displayName }}</label>
-            <input
-              type="text"
-              [readonly]="item.name === 'role' && !checked"
-              [formControlName]="item.displayName"
-            />
+            <div *ngIf="item.name === 'role' && isOtherValueField">
+              <label>Other value field</label>
+              <input type="text" [formControlName]="item.displayName" />
+            </div>
+
+            <div *ngIf="item.name !== 'role'">
+              <label>{{ item.displayName }}</label>
+              <input type="text" [formControlName]="item.displayName" />
+            </div>
           </div>
           <!--NUMBER FIELDS-->
           <div *ngSwitchCase="'NUMBER'">

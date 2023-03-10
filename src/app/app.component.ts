@@ -144,7 +144,7 @@ export class AppComponent implements OnInit {
   public linkType: any;
   public edit: boolean;
   public fields;
-  public checked: boolean;
+  public isOtherValueField: boolean;
   get get_linkTypeValue() {
     return this.linkTypeForm.get('linkName');
   }
@@ -175,16 +175,15 @@ export class AppComponent implements OnInit {
     return this.linkTypeAttributeForm;
   }
 
-  public handleLinkTypeSelection(linkType) {
-    this.linkType = linkType;
-    //removes the local storage key for other select options
-    localStorage.removeItem('roleValue');
-    //resets the checkbox
-    this.checked = false;
+  public handleLinkTypeSelection(e) {
+    this.isOtherValueField = false;
+    this.linkType = e.target.selectedOptions[0].parentNode.label;
+
+    if (e.target.selectedOptions[0].id === this.linkType) {
+      this.isOtherValueField = true;
+    }
     // empties control values if the attributes are the same between each select option - rare occasion
     this.linkTypeAttributeForm.reset();
-    // removes the controls from form of previous selected option - null anyway but best practice
-    // this.linkTypeAttributeForm.controls = {};
 
     // API CALL MOCK DATA
     let resp = [];
@@ -206,28 +205,10 @@ export class AppComponent implements OnInit {
     }
 
     const linkName = this.linkTypeForm.get('linkName').value;
-    this.linkTypeForm
-      .get('fields')
-      ['controls'][0].controls.Role.patchValue(linkName);
-  }
-
-  onEditRole(evt) {
-    this.checked = evt.target.checked;
-
-    // Adds the original role to storage before amendment
-    if (!localStorage['roleValue']) {
-      localStorage.setItem(
-        'roleValue',
-        this.linkTypeForm.get('fields')['controls'][0].controls.Role.value
-      );
-    }
-    this.linkTypeForm.get('fields')['controls'][0].controls.Role.setValue('');
-    if (!this.checked) {
-      // Gets the original role from storage if the user decides against editing the label
-      const getOriginalRoleValue = localStorage.getItem('roleValue');
+    if (!this.isOtherValueField) {
       this.linkTypeForm
         .get('fields')
-        ['controls'][0].controls.Role.setValue(getOriginalRoleValue);
+        ['controls'][0].controls.Role.patchValue(linkName);
     }
   }
 
