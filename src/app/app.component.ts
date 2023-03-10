@@ -82,7 +82,7 @@ export const MANAGERS_SELECTED_LINK_ATTRIBUTES = [
       },
       {
         name: 'text',
-        displayName: 'Text Feild',
+        displayName: 'Text Field',
         value: null,
         dataType: 'STRING',
       },

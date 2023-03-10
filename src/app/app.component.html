@@ -94,8 +94,8 @@
                   {{ linkTypeChild.displayName }}
                 </option>
               </ng-container>
-              <option *ngIf="linkType.linkName !== 'Other....' " [id]="linkType.linkName" [value]="linkType.linkName">
-                Other
+              <option   [id]="linkType.linkName" [value]="linkType.linkName">
+              {{linkType.linkName !== 'Other....' ? linkType.linkName + ' ' + '-' : ''}} Other
               </option>
             </optgroup>
           </ng-container>
