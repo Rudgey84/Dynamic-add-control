@@ -19,7 +19,11 @@
       </div>
       <div class="entity-icon ml-3">
         <img
-          [src]="'https://raw.githubusercontent.com/Rudgey84/Dynamic-add-control/main/src/assets' + nodeObjects[0].icon + '.png'"
+          [src]="
+            'https://stackblitz.com/files/angular-8ppmnv/github/Rudgey84/Dynamic-add-control/main/src/' +
+            nodeObjects[0].icon +
+            '.png'
+          "
         />
       </div>
       <div
@@ -36,8 +40,13 @@
       </div>
 
       <div class="entity-icon mr-3">
+        <!-- https://raw.githubusercontent.com/Rudgey84/Dynamic-add-control/main/src/ -->
         <img
-          [src]="'https://raw.githubusercontent.com/Rudgey84/Dynamic-add-control/main/src/assets' + nodeObjects[1].icon + '.png'"
+          [src]="
+            'https://stackblitz.com/files/angular-8ppmnv/github/Rudgey84/Dynamic-add-control/main/src/' +
+            nodeObjects[1].icon +
+            '.png'
+          "
         />
       </div>
       <div class="entity-icon">
@@ -94,8 +103,13 @@
                   {{ linkTypeChild.displayName }}
                 </option>
               </ng-container>
-              <option   [id]="linkType.linkName" [value]="linkType.linkName">
-              {{linkType.linkName !== 'Other....' ? linkType.linkName + ' ' + '-' : ''}} Other
+              <option [id]="linkType.linkName" [value]="linkType.linkName">
+                {{
+                  linkType.linkName !== 'Other....'
+                    ? linkType.linkName + ' ' + '-'
+                    : ''
+                }}
+                Other
               </option>
             </optgroup>
           </ng-container>
