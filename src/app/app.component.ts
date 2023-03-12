@@ -114,13 +114,13 @@ export const FOOTBALL_CLUBS = [
     id: '123',
     typeName: 'Lion',
     label: ['Aston Villa', '1874'],
-    icon: 'Lion',
+    icon: 'headset',
   },
   {
     id: '456',
     typeName: 'Devil',
     label: ['Manchester United', '1878'],
-    icon: 'Devil',
+    icon: 'houses-fill',
   },
 ];
 @Component({
