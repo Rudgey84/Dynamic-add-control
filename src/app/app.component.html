@@ -135,6 +135,11 @@
               <input type="text" [formControlName]="item.displayName" />
             </div>
           </div>
+          <!--TEXTAREA FIELDS-->
+          <div *ngSwitchCase="'TEXTAREA'">
+            <label>{{ item.displayName }}</label>
+            <textarea [formControlName]="item.displayName"></textarea>
+          </div>
           <!--NUMBER FIELDS-->
           <div *ngSwitchCase="'NUMBER'">
             <label>{{ item.displayName }}</label>
