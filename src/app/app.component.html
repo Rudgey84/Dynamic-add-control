@@ -127,28 +127,28 @@
           <div *ngSwitchCase="'STRING'">
             <div *ngIf="item.name === 'role' && isOtherValueField">
               <label>Other value field</label>
-              <input type="text" [formControlName]="item.name" />
+              <input type="text" class="form-control mb-3 col-6" [formControlName]="item.name" />
             </div>
 
             <div *ngIf="item.name !== 'role'">
               <label>{{ item.displayName }}</label>
-              <input type="text" [formControlName]="item.name" />
+              <input type="text" class="form-control mb-3 col-6" [formControlName]="item.name" />
             </div>
           </div>
           <!--TEXTAREA FIELDS-->
           <div *ngSwitchCase="'TEXTAREA'">
             <label>{{ item.displayName }}</label>
-            <textarea [formControlName]="item.name"></textarea>
+            <textarea [formControlName]="item.name" class="form-control mb-3 col-6"></textarea>
           </div>
           <!--NUMBER FIELDS-->
           <div *ngSwitchCase="'NUMBER'">
             <label>{{ item.displayName }}</label>
-            <input type="number" [formControlName]="item.name" />
+            <input class="form-control mb-3 col-6" type="number" [formControlName]="item.name" />
           </div>
           <!-- DATE FIELDS-->
           <div *ngSwitchCase="'DATE'">
             <label>{{ item.displayName }}</label>
-            <input type="date" [formControlName]="item.name" />
+            <input class="form-control mb-3 col-6" type="date" [formControlName]="item.name" />
           </div>
           <!--BOOLEAN-->
           <div *ngSwitchCase="'BOOLEAN'">
@@ -180,7 +180,7 @@
           <!--SELECTS-->
           <div *ngSwitchCase="'ENUM'">
             <select
-              class="form-control mb-3"
+              class="form-control mb-3 col-6"
               [formControlName]="item.name"
             >
               <option value=""></option>
