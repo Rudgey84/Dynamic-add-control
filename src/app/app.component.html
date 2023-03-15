@@ -32,10 +32,10 @@
         [class.arrow-right]="linkTypeForm.get('rightArrow').value"
       >
         <div
-          *ngIf="linkTypeForm.get('fields')['controls'][0].controls.Role"
+          *ngIf="linkTypeForm.get('fields')['controls'][0].controls.role"
           class="text-center"
         >
-          {{ linkTypeForm.get('fields')['controls'][0].controls.Role.value }}
+          {{ linkTypeForm.get('fields')['controls'][0].controls.role.value }}
         </div>
       </div>
 
@@ -127,28 +127,28 @@
           <div *ngSwitchCase="'STRING'">
             <div *ngIf="item.name === 'role' && isOtherValueField">
               <label>Other value field</label>
-              <input type="text" [formControlName]="item.displayName" />
+              <input type="text" [formControlName]="item.name" />
             </div>
 
             <div *ngIf="item.name !== 'role'">
               <label>{{ item.displayName }}</label>
-              <input type="text" [formControlName]="item.displayName" />
+              <input type="text" [formControlName]="item.name" />
             </div>
           </div>
           <!--TEXTAREA FIELDS-->
           <div *ngSwitchCase="'TEXTAREA'">
             <label>{{ item.displayName }}</label>
-            <textarea [formControlName]="item.displayName"></textarea>
+            <textarea [formControlName]="item.name"></textarea>
           </div>
           <!--NUMBER FIELDS-->
           <div *ngSwitchCase="'NUMBER'">
             <label>{{ item.displayName }}</label>
-            <input type="number" [formControlName]="item.displayName" />
+            <input type="number" [formControlName]="item.name" />
           </div>
           <!-- DATE FIELDS-->
           <div *ngSwitchCase="'DATE'">
             <label>{{ item.displayName }}</label>
-            <input type="date" [formControlName]="item.displayName" />
+            <input type="date" [formControlName]="item.name" />
           </div>
           <!--BOOLEAN-->
           <div *ngSwitchCase="'BOOLEAN'">
@@ -156,8 +156,8 @@
               <label class="col-12 customradio"
                 ><span>Yes</span>
                 <input
-                  [ngClass]="{ checked: item.displayName === 'true' }"
-                  [formControlName]="item.displayName"
+                  [ngClass]="{ checked: item.name === 'true' }"
+                  [formControlName]="item.name"
                   [value]="'true'"
                   type="radio"
                 />
@@ -169,7 +169,7 @@
                 ><span>No</span>
                 <input
                   [ngClass]="{ checked: item.name === 'false' }"
-                  [formControlName]="item.displayName"
+                  [formControlName]="item.name"
                   [value]="'false'"
                   type="radio"
                 />
@@ -181,7 +181,7 @@
           <div *ngSwitchCase="'ENUM'">
             <select
               class="form-control mb-3"
-              [formControlName]="item.displayName"
+              [formControlName]="item.name"
             >
               <option value=""></option>
               <option

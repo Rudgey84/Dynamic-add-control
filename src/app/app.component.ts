@@ -201,7 +201,7 @@ export class AppComponent implements OnInit {
 
     // Adds the fields to the group
     for (let x of resp[0].fields) {
-      this.linkTypeAttributeForm.addControl(x.displayName, new FormControl());
+      this.linkTypeAttributeForm.addControl(x.name, new FormControl());
     }
 
     const linkName = this.linkTypeForm.get('linkName').value;
