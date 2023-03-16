@@ -208,7 +208,7 @@ export class AppComponent implements OnInit {
     if (!this.isOtherValueField) {
       this.linkTypeForm
         .get('fields')
-        ['controls'][0].controls.Role.patchValue(linkName);
+        ['controls'][0].controls.role.patchValue(linkName);
     }
   }
 
