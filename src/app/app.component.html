@@ -118,79 +118,96 @@
     </div>
 
     <div *ngIf="fields" formArrayName="fields">
-      <ng-container
-        *ngFor="let item of fields; let i = index"
-        [formGroup]="linkTypeAttributeForm"
-      >
-        <div [ngSwitch]="item.dataType">
-          <!--TEXT FIELDS-->
-          <div *ngSwitchCase="'STRING'">
-            <div *ngIf="item.name === 'role' && isOtherValueField">
-              <label>Other value field</label>
-              <input type="text" class="form-control mb-3 col-6" [formControlName]="item.name" />
+      <ng-container [formGroup]="linkTypeAttributeForm">
+        <div *ngIf="isOtherValueField">
+          <label>Other value field</label>
+          <input
+            type="text"
+            class="form-control mb-3 col-6"
+            formControlName="role"
+          />
+        </div>
+        <div *ngFor="let item of fields; let i = index">
+          <div [ngSwitch]="item.dataType">
+            <!--TEXT FIELDS-->
+            <div *ngSwitchCase="'STRING'">
+              <div>
+                <label>{{ item.displayName }}</label>
+                <input
+                  type="text"
+                  class="form-control mb-3 col-6"
+                  [formControlName]="item.name"
+                />
+              </div>
             </div>
-
-            <div *ngIf="item.name !== 'role'">
+            <!--TEXTAREA FIELDS-->
+            <div *ngSwitchCase="'TEXTAREA'">
               <label>{{ item.displayName }}</label>
-              <input type="text" class="form-control mb-3 col-6" [formControlName]="item.name" />
+              <textarea
+                [formControlName]="item.name"
+                class="form-control mb-3 col-6"
+              ></textarea>
             </div>
-          </div>
-          <!--TEXTAREA FIELDS-->
-          <div *ngSwitchCase="'TEXTAREA'">
-            <label>{{ item.displayName }}</label>
-            <textarea [formControlName]="item.name" class="form-control mb-3 col-6"></textarea>
-          </div>
-          <!--NUMBER FIELDS-->
-          <div *ngSwitchCase="'NUMBER'">
-            <label>{{ item.displayName }}</label>
-            <input class="form-control mb-3 col-6" type="number" [formControlName]="item.name" />
-          </div>
-          <!-- DATE FIELDS-->
-          <div *ngSwitchCase="'DATE'">
-            <label>{{ item.displayName }}</label>
-            <input class="form-control mb-3 col-6" type="date" [formControlName]="item.name" />
-          </div>
-          <!--BOOLEAN-->
-          <div *ngSwitchCase="'BOOLEAN'">
-            <div class="form-check form-check-inline mb-3">
-              <label class="col-12 customradio"
-                ><span>Yes</span>
-                <input
-                  [ngClass]="{ checked: item.name === 'true' }"
-                  [formControlName]="item.name"
-                  [value]="'true'"
-                  type="radio"
-                />
-                <span class="checkmark"></span>
-              </label>
+            <!--NUMBER FIELDS-->
+            <div *ngSwitchCase="'NUMBER'">
+              <label>{{ item.displayName }}</label>
+              <input
+                class="form-control mb-3 col-6"
+                type="number"
+                [formControlName]="item.name"
+              />
             </div>
-            <div class="form-check form-check-inline">
-              <label class="col-12 customradio"
-                ><span>No</span>
-                <input
-                  [ngClass]="{ checked: item.name === 'false' }"
-                  [formControlName]="item.name"
-                  [value]="'false'"
-                  type="radio"
-                />
-                <span class="checkmark"></span>
-              </label>
+            <!-- DATE FIELDS-->
+            <div *ngSwitchCase="'DATE'">
+              <label>{{ item.displayName }}</label>
+              <input
+                class="form-control mb-3 col-6"
+                type="date"
+                [formControlName]="item.name"
+              />
             </div>
-          </div>
-          <!--SELECTS-->
-          <div *ngSwitchCase="'ENUM'">
-            <select
-              class="form-control mb-3 col-6"
-              [formControlName]="item.name"
-            >
-              <option value=""></option>
-              <option
-                *ngFor="let selectValue of item.values"
-                [value]="selectValue"
+            <!--BOOLEAN-->
+            <div *ngSwitchCase="'BOOLEAN'">
+              <div class="form-check form-check-inline mb-3">
+                <label class="col-12 customradio"
+                  ><span>Yes</span>
+                  <input
+                    [ngClass]="{ checked: item.name === 'true' }"
+                    [formControlName]="item.name"
+                    [value]="'true'"
+                    type="radio"
+                  />
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="col-12 customradio"
+                  ><span>No</span>
+                  <input
+                    [ngClass]="{ checked: item.name === 'false' }"
+                    [formControlName]="item.name"
+                    [value]="'false'"
+                    type="radio"
+                  />
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+            <!--SELECTS-->
+            <div *ngSwitchCase="'ENUM'">
+              <select
+                class="form-control mb-3 col-6"
+                [formControlName]="item.name"
               >
-                {{ selectValue }}
-              </option>
-            </select>
+                <option value=""></option>
+                <option
+                  *ngFor="let selectValue of item.values"
+                  [value]="selectValue"
+                >
+                  {{ selectValue }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
       </ng-container>

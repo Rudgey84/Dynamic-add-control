@@ -60,26 +60,13 @@ export const LINKS = [
 
 export const OTHER = [
   {
-    fields: [
-      {
-        name: 'role',
-        displayName: 'Role',
-        value: null,
-        dataType: 'STRING',
-      },
-    ],
+    fields: [],
   },
 ];
 
 export const MANAGERS_SELECTED_LINK_ATTRIBUTES = [
   {
     fields: [
-      {
-        name: 'role',
-        displayName: 'Role',
-        value: null,
-        dataType: 'STRING',
-      },
       {
         name: 'text',
         displayName: 'Text Field',
@@ -98,14 +85,7 @@ export const MANAGERS_SELECTED_LINK_ATTRIBUTES = [
 
 export const SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES = [
   {
-    fields: [
-      {
-        name: 'role',
-        displayName: 'Role',
-        value: null,
-        dataType: 'STRING',
-      },
-    ],
+    fields: [],
   },
 ];
 
@@ -202,7 +182,9 @@ export class AppComponent implements OnInit {
     // Adds the fields to the group
     for (let x of resp[0].fields) {
       this.linkTypeAttributeForm.addControl(x.name, new FormControl());
+      //this.linkTypeAttributeForm.addControl('role', new FormControl());
     }
+    this.linkTypeAttributeForm.addControl('role', new FormControl());
 
     const linkName = this.linkTypeForm.get('linkName').value;
     if (!this.isOtherValueField) {
