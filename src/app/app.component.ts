@@ -121,16 +121,16 @@ export class AppComponent implements OnInit {
   public linkTypeForm: FormGroup;
   public linkTypeAttributeForm: FormGroup;
   public linkTypes: any;
-  public linkType: any;
   public edit: boolean;
   public fields;
   public isOtherValueField: boolean;
+  public selectedLinkType: any;
   get get_linkTypeValue() {
     return this.linkTypeForm.get('linkName');
   }
 
   public handleSaveLink(): void {
-    this.linkTypeForm.get('linkName').patchValue(this.linkType);
+    this.linkTypeForm.get('linkName').patchValue(this.selectedLinkType);
     console.log('saved', this.linkTypeForm.value);
   }
 
@@ -155,21 +155,28 @@ export class AppComponent implements OnInit {
     return this.linkTypeAttributeForm;
   }
 
-  public handleLinkTypeSelection(e) {
-    this.isOtherValueField = false;
-    this.linkType = e.target.selectedOptions[0].parentNode.label;
+  public handleLinkTypeSelection(event) {
 
-    if (e.target.selectedOptions[0].id === this.linkType) {
-      this.isOtherValueField = true;
-    }
+    		// Gets the parent group type of the selected link - selectedOptions is not compatible with IE11
+		const options = event.srcElement.options;
+		const selectedOption = [...options].find(option => option.selected);
+
+		// Gets the parent group type of the selected link
+		this.selectedLinkType = selectedOption.parentNode.label;
+
+		// Set hardcoded other field to false - set to true if selected to show other input
+		this.isOtherValueField = false;
+		if (selectedOption.id === this.selectedLinkType) {
+			this.isOtherValueField = true;
+		}
     // empties control values if the attributes are the same between each select option - rare occasion
     this.linkTypeAttributeForm.reset();
 
     // API CALL MOCK DATA
     let resp = [];
-    if (this.linkType === 'Managers') {
+    if (this.selectedLinkType === 'Managers') {
       resp = MANAGERS_SELECTED_LINK_ATTRIBUTES;
-    } else if (this.linkType === 'Other....') {
+    } else if (this.selectedLinkType === 'Other....') {
       resp = OTHER;
     } else {
       resp = SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES;
