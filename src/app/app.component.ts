@@ -145,7 +145,7 @@ export class AppComponent implements OnInit {
     return this.formBuilder.group({
       leftArrow: new FormControl(),
       rightArrow: new FormControl(),
-      linkName: new FormControl('Friends', [Validators.required]),
+      linkName: new FormControl('', [Validators.required]),
       fields: this.formBuilder.array([this.createLinkAttributesFormGroup()]),
     });
   }
