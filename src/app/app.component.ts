@@ -169,8 +169,7 @@ export class AppComponent implements OnInit {
 		if (selectedOption.id === this.selectedLinkType) {
 			this.isOtherValueField = true;
 		}
-    // empties control values if the attributes are the same between each select option - rare occasion
-    this.linkTypeAttributeForm.reset();
+
 
     // API CALL MOCK DATA
     let resp = [];
@@ -179,17 +178,26 @@ export class AppComponent implements OnInit {
     } else if (this.selectedLinkType === 'Other....') {
       resp = OTHER;
     } else {
-      resp = SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES;
+   //   resp = SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES;
+   resp = null
     }
+        // empties control values if the attributes are the same between each select option - rare occasion
+        this.linkTypeAttributeForm.reset();
 
     // Remove controls from group when select changed
+    for (const controlName in this.linkTypeAttributeForm.controls) {
+      this.linkTypeAttributeForm.removeControl(controlName);
+    }
 
+if(resp) {
     this.fields = resp[0].fields;
+} else {
+  this.fields = [{}]
+}
 
     // Adds the fields to the group
-    for (let x of resp[0].fields) {
+    for (let x of this.fields) {
       this.linkTypeAttributeForm.addControl(x.name, new FormControl());
-      //this.linkTypeAttributeForm.addControl('role', new FormControl());
     }
     this.linkTypeAttributeForm.addControl('role', new FormControl());
 

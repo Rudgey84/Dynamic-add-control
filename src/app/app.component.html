@@ -92,7 +92,7 @@
           (change)="handleLinkTypeSelection($event)"
         >
           <ng-container *ngFor="let linkType of linkTypes, let i = index">
-            <option value="" selected *ngIf="i === 0">Select link type</option>
+            <option value="" *ngIf="i === 0">Select link type</option>
             <optgroup label="{{ linkType.linkName }}">
               
               <ng-container *ngFor="let linkTypeChild of linkType.children">
