@@ -156,20 +156,18 @@ export class AppComponent implements OnInit {
   }
 
   public handleLinkTypeSelection(event) {
+    // Gets the parent group type of the selected link - selectedOptions is not compatible with IE11
+    const options = event.srcElement.options;
+    const selectedOption = [...options].find((option) => option.selected);
 
-    		// Gets the parent group type of the selected link - selectedOptions is not compatible with IE11
-		const options = event.srcElement.options;
-		const selectedOption = [...options].find(option => option.selected);
+    // Gets the parent group type of the selected link
+    this.selectedLinkType = selectedOption.parentNode.label;
 
-		// Gets the parent group type of the selected link
-		this.selectedLinkType = selectedOption.parentNode.label;
-
-		// Set hardcoded other field to false - set to true if selected to show other input
-		this.isOtherValueField = false;
-		if (selectedOption.id === this.selectedLinkType) {
-			this.isOtherValueField = true;
-		}
-
+    // Set hardcoded other field to false - set to true if selected to show other input
+    this.isOtherValueField = false;
+    if (selectedOption.id === this.selectedLinkType) {
+      this.isOtherValueField = true;
+    }
 
     // API CALL MOCK DATA
     let resp = [];
@@ -178,22 +176,22 @@ export class AppComponent implements OnInit {
     } else if (this.selectedLinkType === 'Other....') {
       resp = OTHER;
     } else {
-   //   resp = SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES;
-   resp = null
+      //   resp = SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES;
+      resp = null;
     }
-        // empties control values if the attributes are the same between each select option - rare occasion
-        this.linkTypeAttributeForm.reset();
+    // empties control values if the attributes are the same between each select option - rare occasion
+    this.linkTypeAttributeForm.reset();
 
     // Remove controls from group when select changed
     for (const controlName in this.linkTypeAttributeForm.controls) {
       this.linkTypeAttributeForm.removeControl(controlName);
     }
 
-if(resp) {
-    this.fields = resp[0].fields;
-} else {
-  this.fields = [{}]
-}
+    if (resp) {
+      this.fields = resp[0].fields;
+    } else {
+      this.fields = [{}];
+    }
 
     // Adds the fields to the group
     for (let x of this.fields) {
