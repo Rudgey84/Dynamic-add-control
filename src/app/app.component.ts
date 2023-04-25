@@ -68,14 +68,14 @@ export const MANAGERS_SELECTED_LINK_ATTRIBUTES = [
   {
     fields: [
       {
-        name: 'text',
-        displayName: 'Text Field',
+        name: 'Manager Text Field',
+        displayName: 'Manager Text Field',
         value: null,
         dataType: 'STRING',
       },
       {
-        name: 'Date attribute',
-        displayName: 'Date attribute',
+        name: 'Manager date attribute',
+        displayName: 'Manager date attribute',
         value: null,
         dataType: 'DATE',
       },
@@ -84,6 +84,25 @@ export const MANAGERS_SELECTED_LINK_ATTRIBUTES = [
 ];
 
 export const SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES = [
+  {
+    fields: [
+      {
+        name: 'Player text Field',
+        displayName: 'Player text Field',
+        value: null,
+        dataType: 'STRING',
+      },
+      {
+        name: 'Player date attribute',
+        displayName: 'Player date attribute',
+        value: null,
+        dataType: 'DATE',
+      },
+    ],
+  },
+];
+
+export const NULLRESPONSE = [
   {
     fields: [],
   },
@@ -113,11 +132,10 @@ export class AppComponent implements OnInit {
 
   @Input() type: number;
   @Input() urnNumber: string;
-  nodeObjects = FOOTBALL_CLUBS;
   @Output() saved = new EventEmitter();
   @Output() editTitle: EventEmitter<any> = new EventEmitter(true);
-  // TODO: remove environment when dev complete
 
+  public nodeObjects = FOOTBALL_CLUBS;
   public linkTypeForm: FormGroup;
   public linkTypeAttributeForm: FormGroup;
   public linkTypes: any;
@@ -131,7 +149,6 @@ export class AppComponent implements OnInit {
 
   public handleSaveLink(): void {
     this.linkTypeForm.get('linkName').patchValue(this.selectedLinkType);
-    console.log('saved', this.linkTypeForm.value);
   }
 
   // Get all available link types...
@@ -171,14 +188,13 @@ export class AppComponent implements OnInit {
 
     // API CALL MOCK DATA
     let resp = [];
-    if (this.selectedLinkType === 'Managers') {
-      resp = MANAGERS_SELECTED_LINK_ATTRIBUTES;
-    } else if (this.selectedLinkType === 'Other....') {
-      resp = OTHER;
-    } else {
-      //   resp = SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES;
-      resp = null;
-    }
+    const linkTypeToRespMap = {
+      Managers: MANAGERS_SELECTED_LINK_ATTRIBUTES,
+      'Other....': OTHER,
+      'Shared Players': SHARED_PLAYERS_SELECTED_LINK_ATTRIBUTES,
+      undefined: NULLRESPONSE,
+    };
+    resp = linkTypeToRespMap[this.selectedLinkType];
     // empties control values if the attributes are the same between each select option - rare occasion
     this.linkTypeAttributeForm.reset();
 
@@ -187,11 +203,7 @@ export class AppComponent implements OnInit {
       this.linkTypeAttributeForm.removeControl(controlName);
     }
 
-    if (resp) {
-      this.fields = resp[0].fields;
-    } else {
-      this.fields = [{}];
-    }
+    this.fields = resp[0].fields;
 
     // Adds the fields to the group
     for (let x of this.fields) {
