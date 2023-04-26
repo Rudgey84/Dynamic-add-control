@@ -27,7 +27,11 @@
         />
       </div>
       <div
-        class="link-line"
+       
+        [ngClass]="[
+				nodeObjects[1].parentLineStyle === 'Confirmed' ? 'link-line-confirmed' : '',
+				nodeObjects[1].parentLineStyle === 'Unconfirmed' ? 'link-line-unconfirmed' : ''
+			]"
         [class.arrow-left]="linkTypeForm.get('leftArrow').value"
         [class.arrow-right]="linkTypeForm.get('rightArrow').value"
       >

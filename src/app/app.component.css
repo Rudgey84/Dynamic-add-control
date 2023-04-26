@@ -1,9 +1,17 @@
-.link-line {
-  width: 100%;
-  position: relative;
-  margin: 15px;
-  border-top: 2px solid #000;
+.link-line-confirmed {
+	width: 100%;
+	position: relative;
+	margin: 15px;
+	border-top: 2px solid #777;
 }
+.link-line-unconfirmed {
+	width: 100%;
+	position: relative;
+	margin: 15px;
+	background-image: repeating-linear-gradient(to right, #cacaca, #cacaca 7px, transparent 7px, transparent 15px);
+	height: 2px;
+}
+
 .entity-icon {
   position: relative;
   top: 4px;
@@ -13,30 +21,43 @@
   top: 20px;
   left: 20px;
 }
-.link-line.arrow-right:after {
-  position: absolute;
-  content: '';
-  bottom: -8px;
-  right: 0;
-  display: inline-block;
-  border-right: 3px solid black;
-  border-bottom: 3px solid black;
-  width: 12px;
-  height: 12px;
-  transform: rotate(-45deg);
+.link-line-confirmed.arrow-left:before {
+	position: absolute;
+	content: '';
+	top: -8px;
+	left: 0;
+	display: inline-block;
+	border-right: 3px solid #777;
+	border-bottom: 3px solid #777;
+	width: 12px;
+	height: 12px;
+	transform: rotate(135deg);
 }
 
-.link-line.arrow-left:before {
-  position: absolute;
-  content: '';
-  bottom: -8px;
-  left: 0;
-  display: inline-block;
-  border-right: 3px solid black;
-  border-bottom: 3px solid black;
-  width: 12px;
-  height: 12px;
-  transform: rotate(135deg);
+.link-line-unconfirmed.arrow-right:after {
+	position: absolute;
+	content: '';
+	top: -5px;
+	right: 0;
+	display: inline-block;
+	border-right: 3px solid #cacaca;
+	border-bottom: 3px solid #cacaca;
+	width: 12px;
+	height: 12px;
+	transform: rotate(-45deg);
+}
+
+.link-line-unconfirmed.arrow-left:before {
+	position: absolute;
+	content: '';
+	top: -5px;
+	left: 0;
+	display: inline-block;
+	border-right: 3px solid #cacaca;
+	border-bottom: 3px solid #cacaca;
+	width: 12px;
+	height: 12px;
+	transform: rotate(135deg);
 }
 
 input:-moz-read-only {
